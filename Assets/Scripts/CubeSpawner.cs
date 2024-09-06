@@ -19,7 +19,6 @@ public class CubeSpawner : MonoBehaviour
 
         if (Random.Range(minChaceSpawn, maxChaceSpawn + 1) <= cube.ChanseSpawn)
         {
-
             int minCubes = 2;
             int maxCubes = 6;
             int countCubes = Random.Range(minCubes, maxCubes + 1);
