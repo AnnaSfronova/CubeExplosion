@@ -13,7 +13,7 @@ public class CubeSpawner : MonoBehaviour
     public List<Cube> Spawn(Cube cube)
     {
         List<Cube> spawnedCubes = new();
-        
+
         int minChaceSpawn = 0;
         int maxChaceSpawn = 100;
 

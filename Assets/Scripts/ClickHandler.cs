@@ -21,9 +21,11 @@ public class ClickHandler : MonoBehaviour
             {
                 if (hit.collider.TryGetComponent(out Cube cube))
                 {
-                    List<Cube> cubes = new();
-                    cubes = _cubeSpawner.Spawn(cube);
-                    _cubeExploder.Explode(cubes, cube.transform.position);
+                    List<Cube> cubes = _cubeSpawner.Spawn(cube);
+
+                    if (cubes.Count > 0)
+                        _cubeExploder.Explode(cubes, cube.transform.position);
+
                     cube.Destroy();
                 }
             }
