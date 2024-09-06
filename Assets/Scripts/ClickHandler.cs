@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ClickHandler : MonoBehaviour
@@ -5,20 +6,26 @@ public class ClickHandler : MonoBehaviour
     [SerializeField] private LayerMask _mask;
     [SerializeField] private Camera _camera;
     [SerializeField] private CubeSpawner _cubeSpawner;
+    [SerializeField] private CubeExploder _cubeExploder;
 
-    private Ray _ray;
     private float _maxDistance = 100f;
+    private int _mouseButton = 0;
 
-    void Update()
+    private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(_mouseButton))
         {
-            _ray = _camera.ScreenPointToRay(Input.mousePosition);
+            Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
 
-            if (Physics.Raycast(_ray, out RaycastHit hit, _maxDistance, _mask))
+            if (Physics.Raycast(ray, out RaycastHit hit, _maxDistance, _mask))
             {
                 if (hit.collider.TryGetComponent(out Cube cube))
-                    _cubeSpawner.Spawn(cube);
+                {
+                    List<Cube> cubes = new();
+                    cubes = _cubeSpawner.Spawn(cube);
+                    _cubeExploder.Explode(cubes, cube.transform.position);
+                    cube.Destroy();
+                }
             }
         }
     }

@@ -466,7 +466,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04ef4d5b4e9815a4582bf68689681c51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cubeExploder: {fileID: 1905112584}
 --- !u!4 &718391246
 Transform:
   m_ObjectHideFlags: 0
@@ -891,6 +890,7 @@ MonoBehaviour:
     m_Bits: 64
   _camera: {fileID: 963194227}
   _cubeSpawner: {fileID: 718391245}
+  _cubeExploder: {fileID: 1905112584}
 --- !u!4 &1547193798
 Transform:
   m_ObjectHideFlags: 0

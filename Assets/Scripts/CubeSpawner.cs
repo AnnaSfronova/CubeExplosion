@@ -3,9 +3,14 @@ using UnityEngine;
 
 public class CubeSpawner : MonoBehaviour
 {
-    [SerializeField] private CubeExploder _cubeExploder;
+    private List<Color> _colors;
 
-    public void Spawn(Cube cube)
+    private void Start()
+    {
+        FillColors();
+    }
+
+    public List<Cube> Spawn(Cube cube)
     {
         List<Cube> spawnedCubes = new();
         
@@ -25,28 +30,30 @@ public class CubeSpawner : MonoBehaviour
             }
         }
 
-        _cubeExploder.Explode(spawnedCubes, cube.transform.position);
-        cube.Destroy();
+        return spawnedCubes;
     }
 
     private Cube CreateCube(Cube cube)
     {
         Cube newCube = Instantiate(cube, cube.transform.position, cube.transform.rotation);
 
-        newCube.Init(GetColor());
+        newCube.Init(GetColor(), cube.ChanseSpawn);
 
         return newCube;
     }
 
-    private Color GetColor()
+    private void FillColors()
     {
-        List<Color> colors = new()
+        _colors = new()
         {
             new Color32(201,203,163,255),
             new Color32(255,225,168,255),
             new Color32(226,109,92,255)
         };
+    }
 
-        return colors[Random.Range(0, colors.Count)];
+    private Color GetColor()
+    {
+        return _colors[Random.Range(0, _colors.Count)];
     }
 }

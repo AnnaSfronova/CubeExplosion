@@ -10,10 +10,9 @@ public class CubeExploder : MonoBehaviour
 
     public void Explode(List<Cube> cubes, Vector3 position)
     {
-
         foreach (Rigidbody cube in cubes.Select(cube => cube.Rigidbody))
         {
-            ParticleSystem explodeEffect = Instantiate(_effect, cube.transform.position, cube.transform.rotation);
+            Instantiate(_effect, cube.transform.position, cube.transform.rotation);
             cube.AddExplosionForce(_forse, position, _radius);
         }
     }
