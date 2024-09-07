@@ -13,22 +13,26 @@ public class ClickHandler : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(_mouseButton))
+        if (Input.GetMouseButtonDown(_mouseButton) == false)
+            return;
+
+        Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
+
+        if (Physics.Raycast(ray, out RaycastHit hit, _maxDistance, _mask))
         {
-            Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
-
-            if (Physics.Raycast(ray, out RaycastHit hit, _maxDistance, _mask))
+            if (hit.collider.TryGetComponent(out Cube cube))
             {
-                if (hit.collider.TryGetComponent(out Cube cube))
-                {
-                    List<Cube> cubes = _cubeSpawner.Spawn(cube);
+                List<Cube> cubes = new();
+                _cubeSpawner.Spawn(cube, cubes);
 
-                    if (cubes.Count > 0)
-                        _cubeExploder.Explode(cubes, cube.transform.position);
+                if (cubes.Count > 0)
+                    _cubeExploder.ExplodeSplittedCube(cubes, cube.transform.position);
+                else
+                    _cubeExploder.ExplodeUnsplittedCube(cube);
 
-                    cube.Destroy();
-                }
+                cube.Destroy();
             }
         }
+
     }
 }

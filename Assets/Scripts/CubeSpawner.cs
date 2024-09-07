@@ -3,17 +3,10 @@ using UnityEngine;
 
 public class CubeSpawner : MonoBehaviour
 {
-    private List<Color> _colors;
+    [SerializeField] private CubeColorChanger _cubeColorChanger;
 
-    private void Start()
+    public void Spawn(Cube cube, List<Cube> spawnedCubes)
     {
-        FillColors();
-    }
-
-    public List<Cube> Spawn(Cube cube)
-    {
-        List<Cube> spawnedCubes = new();
-
         int minChaceSpawn = 0;
         int maxChaceSpawn = 100;
 
@@ -28,31 +21,14 @@ public class CubeSpawner : MonoBehaviour
                 spawnedCubes.Add(CreateCube(cube));
             }
         }
-
-        return spawnedCubes;
     }
 
     private Cube CreateCube(Cube cube)
     {
         Cube newCube = Instantiate(cube, cube.transform.position, cube.transform.rotation);
 
-        newCube.Init(GetColor(), cube.ChanseSpawn);
+        newCube.Init(_cubeColorChanger.GetColor(), cube.ChanseSpawn);
 
         return newCube;
-    }
-
-    private void FillColors()
-    {
-        _colors = new()
-        {
-            new Color32(201,203,163,255),
-            new Color32(255,225,168,255),
-            new Color32(226,109,92,255)
-        };
-    }
-
-    private Color GetColor()
-    {
-        return _colors[Random.Range(0, _colors.Count)];
     }
 }
